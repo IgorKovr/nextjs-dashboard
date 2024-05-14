@@ -127,18 +127,16 @@ const MessageBalloon = ({ sender, message, date }: MessageBalloonProps) => {
     <div
       className={cn(
         'flex max-w-[87vw] flex-col gap-2 rounded-md p-4',
-        sender === 'USER' && ' bg-slate-500 dark:bg-slate-800',
-        sender === 'AI' && ' bg-slate-400 dark:bg-slate-600'
+        sender === 'USER' && ' bg-slate-400',
+        sender === 'AI' && ' bg-slate-400'
       )}
     >
-
       <label htmlFor="customer" className="text-xs font-semibold text-white">
         {sender === 'AI' ? 'AI Bot' : 'Me'}
         {formatDate(date)}
       </label>
 
-
-{/* TODO: Add sender and DateFormatter */}
+      {/* TODO: Add sender label and DateFormatter */}
       {/* <Button className="text-xs font-semibold text-white">
         { sender === 'AI' ? 'AI Bot' : 'Me' }
         { formatDate(date) }

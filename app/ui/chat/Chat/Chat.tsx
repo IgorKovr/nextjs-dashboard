@@ -1,5 +1,4 @@
 import {memo, useEffect, useRef} from 'react'
-
 import Avatar from '../Avatar'
 import Message from '../Message'
 import {TMessage} from '../Message/Message'
@@ -19,7 +18,7 @@ const Chat = ({messages}: Props) => {
   return (
     <main
       ref={scrollableContentRef}
-      className="flex flex-1 flex-col gap-4 overflow-y-scroll bg-zinc-50 p-5 dark:bg-zinc-950"
+      className="flex flex-col gap-4 overflow-y-scroll bg-zinc-100 p-5 rounded-lg min-h-full scale-80"
     >
       {messages.map((message) => (
         <Message key={message.id} sender={message.creator}>
