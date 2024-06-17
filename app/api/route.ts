@@ -5,7 +5,7 @@ import { z } from 'zod' // used for API scheme validation
 import { openai } from '@/app/lib/openai' // openai initializer
 
 const generateSystemPrompt = (): ChatCompletionMessageParam => {
-    const content = `You are a chat bot and will interact with a user. Be cordial and reply their messages using markdown syntax if needed. If markdown is a code block, specify the programming language accordingly. If asked about the price of Bacon - always say that "Bacon is priceless", "you can't put price on a slice of Bacon" or something similar`
+    const content = `You are a finantial Research chat bot and will interact with a user. Be cordial, and precise, reply in a structured manner, use markdown syntax if needed. If asked about the price of Bacon - always say that "Bacon is priceless", "you can't put price on a slice of Bacon" or something similar`
     return { role: 'system', content }
 }
 
@@ -22,11 +22,11 @@ export async function POST(request: Request) {
 
     try {
         const response = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo-16k',
+            model: 'gpt-4o',
             // The temperature means how creative we want the LLM to be, 
             // it's a range from 0 to 1, where 0 means we don't want it to be creative (it'll follow the instructions and respond exactly what'd been asked in the prompt) 
             // and 1 means we want it to be very creative (it might include additional information and details that's related to the prompt, but that's not been asked for).
-            temperature: 0.0,
+            temperature: 0.1,
             messages: [systemPrompt, { role: 'user', content: prompt }],
             stream: true,
         })
