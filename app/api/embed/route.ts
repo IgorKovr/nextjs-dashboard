@@ -50,32 +50,3 @@ export async function POST(request: Request) {
     headers: {'content-type': 'application/json'},
   })
 }
-
-  // // TODO: TMP for Debugging; If you are connected, the server returns True.
-  // // const weaviateIsReady = await weaviateClient.isReady()
-  // // console.log(weaviateIsReady)
-  
-  // // Define a collection
-  // // TODO: Run Once! (Then check if the collection is there)
-  // async function createCollection() {
-  //   const questions = await weaviateClient.collections.create({
-  //     name: 'Files',
-  //     properties: [
-  //       {
-  //         name: 'title',
-  //         dataType: 'text' as const,
-  //       },
-  //     ],
-  //     vectorizers: [
-  //       weaviate.configure.vectorizer.text2VecOpenAI({ 
-  //         name: 'title_vector',
-  //         sourceProperties: ['title'],
-  //         },
-  //       ),
-  //     ],
-  //     generative: generative.openAI(),
-  //   })
-  //   console.log(`Collection ${questions.name} created!`)
-  // }
-
-  // await createCollection()
