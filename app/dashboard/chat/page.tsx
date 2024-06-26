@@ -59,10 +59,16 @@ const Home = () => {
   
       const selectedFile = files[0]
   
-      await uploadFile(selectedFile)
+      try {
+        await uploadFile(selectedFile)
+        setFile(selectedFile)
+      } catch (error) {
+        console.error(error)
+        throw(error)
+      } finally {
+        setIsUploading(false)
+      }
   
-      setFile(selectedFile)
-      setIsUploading(false)
       event.target.value = '' // clear input as we handle the file selection in state
     }
   
