@@ -22,21 +22,25 @@ export async function POST(request: Request) {
   // TODO: Move to a separate class with an abstraction layer
   const waviateAPIKey = process.env.WEAVIATE_API_KEY ?? ''
   if (!waviateAPIKey) {
+    console.log('Missing Weaviate API Key ENV Variable')
     return NextResponse.json({ message: 'Missing Weaviate API Key ENV Variable', success: false });
   }
 
   const openAIAPIKey = process.env.OPENAI_API_KEY ?? ''
   if (!openAIAPIKey) {
+    console.log('Missing OpenAI API Key ENV Variable')
     return NextResponse.json({ message: 'Missing OpenAI API Key ENV Variable', success: false });
   }
   
   const weaviateEndpointURL = process.env.WEAVIATE_ENDPOINT_URL ?? ''
   if (!weaviateEndpointURL) {
+    console.log('Missing Weaviate Endpoint URL ENV Variable')
     return NextResponse.json({ message: 'Missing Weaviate Endpoint URL ENV Variable', success: false });
   }
 
   const file: File | null = (await data).get('file') as unknown as File
   if (!file) {
+    console.log('Missing file input')
     return NextResponse.json({message: 'Missing file input', success: false})
   }
 
@@ -49,29 +53,8 @@ export async function POST(request: Request) {
     }
   )
 
-  async function createStorage() {
-    await weaviateClient.collections.create({
-      name: 'Files',
-      properties: [
-        {
-          name: 'title',
-          dataType: 'text' as const,
-        },
-      ],
-      vectorizers: [
-        weaviate.configure.vectorizer.text2VecOpenAI({
-          name: 'title_vector',
-          sourceProperties: ['title'],
-          model: OPENAI_EMBEDDING_MODEL,
-          dimensions: VECTOR_DB_DIMENTIONS
-          },
-        ),
-      ],
-    });
-  }
-
   // TODO: Add a check if the Storage exist and recreate one when needed
-  // createStorage()
+  // createStorage(weaviateClient)
 
   // File Loaders
   // PDF Loader 
@@ -103,16 +86,37 @@ export async function POST(request: Request) {
 
   console.log(fileContent)  
 
-  async function uploadDataToWeaviate() {
-    const filesCollection = weaviateClient.collections.get('Files');
-    const response = await filesCollection.data.insertMany(mappedDocs)
-    console.log('File chunked and uploaded to Weaviate Vector DB:', file?.name, response);
-  }
-
-  await uploadDataToWeaviate();
+  await uploadDataToWeaviate(weaviateClient, mappedDocs, file);
 
   return new NextResponse(JSON.stringify({success: true}), {
     status: 200,
     headers: {'content-type': 'application/json'},
   })
+}
+
+async function createStorage(weaviateClient: WeaviateClient) {
+  await weaviateClient.collections.create({
+    name: 'Files',
+    properties: [
+      {
+        name: 'title',
+        dataType: 'text' as const,
+      },
+    ],
+    vectorizers: [
+      weaviate.configure.vectorizer.text2VecOpenAI({
+        name: 'title_vector',
+        sourceProperties: ['title'],
+        model: OPENAI_EMBEDDING_MODEL,
+        dimensions: VECTOR_DB_DIMENTIONS
+        },
+      ),
+    ],
+  });
+}
+
+async function uploadDataToWeaviate(weaviateClient: WeaviateClient, mappedDocs: any[], file: File | null) {
+  const filesCollection = weaviateClient.collections.get('Files');
+  const response = await filesCollection.data.insertMany(mappedDocs)
+  console.log('File chunked and uploaded to Weaviate Vector DB:', file?.name, response);
 }
