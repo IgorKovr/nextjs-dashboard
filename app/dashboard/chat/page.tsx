@@ -2,12 +2,33 @@
 
 import { useCompletion } from 'ai/react'
 import { TrashIcon } from '@heroicons/react/24/outline'
-import { FormEvent, useEffect } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Chat from '@/app/ui/chat/Chat'
-import { useMessages } from '@/app/lib/store'
+import { useFile, useMessages } from '@/app/lib/store'
+
+async function uploadFile(file: File) {
+  try {
+    const formData = new FormData()
+    formData.append('file', file)
+    const response = await fetch('/api/embed', {
+      method: 'POST',
+      body: formData,
+    })
+    if (response.ok) {
+      console.log('Embedding successful!')
+    } else {
+      const errorResponse = await response.text()
+      throw new Error(`Embedding failed: ${errorResponse}`)
+    }
+  } catch (error) {
+    throw new Error(`Error during embedding: ${error}`)
+  }
+}
 
 const Home = () => {
     const {messages, setMessages, clearMessages} = useMessages()
+    const {file, setFile, clear: clearFile} = useFile()
+    const [isUploading, setIsUploading] = useState(false)
   
     const {input, setInput, handleInputChange, handleSubmit, completion, isLoading} = useCompletion({
       api: `/api`,
@@ -26,6 +47,30 @@ const Home = () => {
       setMessages('USER', input)
       setInput('')
     }
+
+    const handleFileSelected = async (event?: ChangeEvent<HTMLInputElement>) => {
+      setIsUploading(true)
+      if (!event) return clearFile()
+      const {files} = event.currentTarget
+  
+      if (!files?.length) {
+        return
+      }
+  
+      const selectedFile = files[0]
+  
+      try {
+        await uploadFile(selectedFile)
+        setFile(selectedFile)
+      } catch (error) {
+        console.error(error)
+        throw(error)
+      } finally {
+        setIsUploading(false)
+      }
+  
+      event.target.value = '' // clear input as we handle the file selection in state
+    }
   
     useEffect(() => {
       if (!completion || !isLoading) return
@@ -40,7 +85,6 @@ const Home = () => {
               "justify-between" class justifies the content in the header with space between the items.
               "border-b" class adds a bottom border to the header element.*/}
           <h1 className="text-xl font-bold">AI Chat</h1>
-          
         </header>
         <div className="flex-grow flex-col items-center gap-3">
         <Chat messages={messages} />
@@ -50,6 +94,9 @@ const Home = () => {
           value={input}
           onSubmit={onSubmit}
           disabled={isLoading}
+          onFileSelected={handleFileSelected}
+          file={file}
+          isUploading={isUploading}
         />
         <div
           className="flex cursor-pointer items-center gap-2 text-xs text-red-500"
