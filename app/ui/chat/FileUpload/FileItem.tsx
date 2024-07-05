@@ -10,7 +10,7 @@ const FileItem = ({name, className, onRemove}: Props) => {
   return (
     <div className={cn('flex items-center', className)}>
       <label>{name}</label> 
-      {/* <XMarkIcon className="h-4 w-4" onClick={onRemove} /> */}
+      <XMarkIcon className="h-4 w-4" onClick={onRemove} />
     </div>
   )
 }
