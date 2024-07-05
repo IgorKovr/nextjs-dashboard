@@ -58,10 +58,14 @@ export async function POST(request: Request) {
 
   // File Loaders
   // PDF Loader 
-  // TODO: Add Multiple File loader (to parse any filetype)
+  // TODO: Support more filetypes
+
   const loader = new PDFLoader(file, { splitPages: false })
   const docs = await loader.load() 
 
+  // Because we use 'splitPages: false', 
+  // the PDFLoader will concatenate the pages together availablbe at [0] position of an Array, 
+  // this helps us down the chain with the text splitting.
   const fileContent = docs[0].pageContent
   const fileTitle = docs[0].metadata.title
 
