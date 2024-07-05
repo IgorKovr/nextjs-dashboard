@@ -1,7 +1,7 @@
 'use client'
 
-import {create} from 'zustand'
-import {createJSONStorage, persist} from 'zustand/middleware'
+import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
 type Creator = 'USER' | 'AI'
 
@@ -38,14 +38,22 @@ export const useMessages = create(
 
           if (creator === 'AI' && lastMessage.creator === 'AI') {
             return {
-              messages: [...storedMessages.slice(0, -1), {...lastMessage, text: message}],
+              messages: [
+                ...storedMessages.slice(0, -1),
+                { ...lastMessage, text: message },
+              ],
             }
           }
 
           return {
             messages: [
               ...storedMessages,
-              {id: generateRandomId(), text: message, createdAt: new Date(), creator},
+              {
+                id: generateRandomId(),
+                text: message,
+                createdAt: new Date(),
+                creator,
+              },
             ],
           }
         })
@@ -55,8 +63,8 @@ export const useMessages = create(
       name: 'messages', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
       skipHydration: true,
-    }
-  )
+    },
+  ),
 )
 
 type FileState = {
@@ -86,6 +94,6 @@ export const useFile = create(
       name: 'file',
       storage: createJSONStorage(() => sessionStorage),
       skipHydration: true,
-    }
-  )
+    },
+  ),
 )

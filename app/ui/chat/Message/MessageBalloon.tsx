@@ -1,10 +1,20 @@
 'use client'
 
-import { DocumentDuplicateIcon, CheckIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
+import {
+  DocumentDuplicateIcon,
+  CheckIcon,
+  ArrowDownTrayIcon,
+} from '@heroicons/react/24/outline'
 import { Children, memo, useState } from 'react'
 import Markdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
-import { CodeBlockChild, cn, extractTextFromCodeBlock, formatDate, parseMimeType } from '@/app/lib/utils'
+import {
+  CodeBlockChild,
+  cn,
+  extractTextFromCodeBlock,
+  formatDate,
+  parseMimeType,
+} from '@/app/lib/utils'
 
 type MessageBalloonProps = {
   sender: string
@@ -45,7 +55,13 @@ function CopyButton({ content }: { content: React.ReactNode }) {
   )
 }
 
-function DownloadButton({ mimeType, content }: { mimeType: string; content: React.ReactNode }) {
+function DownloadButton({
+  mimeType,
+  content,
+}: {
+  mimeType: string
+  content: React.ReactNode
+}) {
   const [download, setDownloadOk] = useState(false)
 
   const handleDownloadClick = () => {
@@ -84,12 +100,20 @@ function DownloadButton({ mimeType, content }: { mimeType: string; content: Reac
   )
 }
 
-function CodeBlockHeader({ mimeType, children }: { mimeType: string; children: CodeBlockChild }) {
+function CodeBlockHeader({
+  mimeType,
+  children,
+}: {
+  mimeType: string
+  children: CodeBlockChild
+}) {
   const parsedMimeType = parseMimeType(mimeType)
 
   return (
     <div className="flex justify-between bg-zinc-900 px-4 py-2">
-      <div className="flex cursor-pointer items-center text-sm">{parsedMimeType}</div>
+      <div className="flex cursor-pointer items-center text-sm">
+        {parsedMimeType}
+      </div>
       <div className="flex justify-end gap-4">
         <CopyButton content={children.props.children} />
         <DownloadButton content={children.props.children} mimeType={mimeType} />
@@ -116,7 +140,10 @@ const Pre = ({ children }: any) => {
 
 const BlockQuote = ({ children, ...props }: any) => {
   return (
-    <blockquote {...props} className="my-2 border-l-2 border-neutral-600 bg-neutral-800 p-2">
+    <blockquote
+      {...props}
+      className="my-2 border-l-2 border-neutral-600 bg-neutral-800 p-2"
+    >
       {children}
     </blockquote>
   )
@@ -128,7 +155,7 @@ const MessageBalloon = ({ sender, message, date }: MessageBalloonProps) => {
       className={cn(
         'flex max-w-[87vw] flex-col gap-2 rounded-md p-4',
         sender === 'USER' && ' bg-slate-400',
-        sender === 'AI' && ' bg-slate-400'
+        sender === 'AI' && ' bg-slate-400',
       )}
     >
       <label htmlFor="customer" className="text-xs font-semibold text-white">
@@ -141,7 +168,6 @@ const MessageBalloon = ({ sender, message, date }: MessageBalloonProps) => {
         { sender === 'AI' ? 'AI Bot' : 'Me' }
         { formatDate(date) }
       </Label> */}
-
 
       <label htmlFor="customer" className="text-base text-white">
         <Markdown

@@ -1,4 +1,4 @@
-const styleguide = require('@vercel/style-guide/prettier');
+const styleguide = require('@vercel/style-guide/prettier')
 
 module.exports = {
   ...styleguide,
@@ -6,4 +6,4 @@ module.exports = {
   singleQuote: true,
   trailingComma: 'all',
   plugins: [...styleguide.plugins, 'prettier-plugin-tailwindcss'],
-};
+}

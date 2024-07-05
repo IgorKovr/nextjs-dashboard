@@ -1,4 +1,4 @@
-import {ChangeEvent, useRef} from 'react'
+import { ChangeEvent, useRef } from 'react'
 import { cn } from '@/app/lib/utils'
 import { Button } from '../../button'
 import { Textarea } from '../textarea'
@@ -9,7 +9,9 @@ type Props = {
   onFileSelected?: (event?: ChangeEvent<HTMLInputElement>) => void
   file?: File | null
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => void
   value: string
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
@@ -34,7 +36,9 @@ const ChatInput = ({
         <FileUpload.File
           className="mb-2 flex flex-row items-center gap-2 px-2"
           name={file.name}
-          onRemove={() => {onFileSelected()}}
+          onRemove={() => {
+            onFileSelected()
+          }}
         />
       )}
       <div className="flex flex-row items-center gap-10">
@@ -50,7 +54,8 @@ const ChatInput = ({
               if (e.key === 'Enter') {
                 e.preventDefault()
 
-                if (e.shiftKey) onChange({target: {value: `${value}\n`}} as any)
+                if (e.shiftKey)
+                  onChange({ target: { value: `${value}\n` } } as any)
                 else formRef.current?.requestSubmit()
 
                 return
@@ -58,16 +63,20 @@ const ChatInput = ({
             }}
           />
           {isUploading ? (
-          <ArrowPathIcon className="h-5 w-5 text-neutral-500" />
-        ) : (
-          <FileUpload id="file" onChange={onFileSelected} disabled={isUploading} />
-        )
-          }
+            <ArrowPathIcon className="h-5 w-5 text-neutral-500" />
+          ) : (
+            <FileUpload
+              id="file"
+              onChange={onFileSelected}
+              disabled={isUploading}
+            />
+          )}
         </div>
         <Button
           className={cn('gap-2', disabled && 'bg-neutral-300')}
           type="submit"
-          disabled={disabled || isUploading}>
+          disabled={disabled || isUploading}
+        >
           Send <PaperAirplaneIcon className="h-3 w-3" />
         </Button>
       </div>

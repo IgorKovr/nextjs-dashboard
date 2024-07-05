@@ -3,11 +3,11 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "format:fix": "prettier --write --ignore-path .gitignore .",
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
-    "format:fix": "prettier --write --ignore-path .gitignore .",
-    "start": "next start",
-    "seed": "node -r dotenv/config ./scripts/seed.js"
+    "seed": "node -r dotenv/config ./scripts/seed.js",
+    "start": "next start"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.33",

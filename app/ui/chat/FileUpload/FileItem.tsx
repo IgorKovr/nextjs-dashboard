@@ -6,10 +6,10 @@ type Props = {
   onRemove: () => void
   className?: string
 }
-const FileItem = ({name, className, onRemove}: Props) => {
+const FileItem = ({ name, className, onRemove }: Props) => {
   return (
     <div className={cn('flex items-center', className)}>
-      <label>{name}</label> 
+      <label>{name}</label>
       <XMarkIcon className="h-4 w-4" onClick={onRemove} />
     </div>
   )
