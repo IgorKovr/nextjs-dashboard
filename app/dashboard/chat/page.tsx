@@ -83,10 +83,11 @@ const Home = () => {
           {/* "flex" class sets the display property to flex for the header element.
               "items-center" class aligns the items in the header along the center of the cross-axis.
               "justify-between" class justifies the content in the header with space between the items.
-              "border-b" class adds a bottom border to the header element.*/}
+              "border-b" class adds a bottom border to the header element.
+              "overflow-y-auto" makes the chat window to scroll in itself instead of resizing*/}
           <h1 className="text-xl font-bold">AI Chat</h1>
         </header>
-        <div className="flex-grow flex-col items-center gap-3">
+        <div className="flex-grow flex-col items-center gap-3 overflow-y-auto">
         <Chat messages={messages} />
         </div>
         <Chat.Input
