@@ -13,13 +13,24 @@ type Props = {
   className?: string
 }
 
-const FileUpload = ({id, onChange, label, allowedTypes, disabled, className}: Props) => {
+const FileUpload = ({
+  id,
+  onChange,
+  label,
+  allowedTypes,
+  disabled,
+  className,
+}: Props) => {
   return (
     <>
       <div className={cn('flex items-center gap-2', className)}>
         <label
           htmlFor={id}
-          className={cn('cursor-pointer', disabled && 'cursor-not-allowed text-neutral-500')}>
+          className={cn(
+            'cursor-pointer',
+            disabled && 'cursor-not-allowed text-neutral-500',
+          )}
+        >
           <PaperClipIcon className="h-8 w-8" />
         </label>
         {label && (
@@ -27,8 +38,9 @@ const FileUpload = ({id, onChange, label, allowedTypes, disabled, className}: Pr
             htmlFor={id}
             className={cn(
               'line-clamp-1 cursor-pointer',
-              disabled && 'cursor-not-allowed text-neutral-500'
-            )}>
+              disabled && 'cursor-not-allowed text-neutral-500',
+            )}
+          >
             {label}
           </label>
         )}

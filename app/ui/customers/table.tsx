@@ -1,12 +1,12 @@
-import Image from 'next/image';
-import { lusitana } from '@/app/ui/fonts';
-import Search from '@/app/ui/search';
-import { FormattedCustomersTable } from '@/app/lib/definitions';
-import { fetchFilteredCustomers } from '@/app/lib/data';
+import Image from 'next/image'
+import { lusitana } from '@/app/ui/fonts'
+import Search from '@/app/ui/search'
+import { FormattedCustomersTable } from '@/app/lib/definitions'
+import { fetchFilteredCustomers } from '@/app/lib/data'
 
-export default async function CustomersTable({query}:{query: string}) {
-
-  const customers: FormattedCustomersTable[] = await fetchFilteredCustomers(query)
+export default async function CustomersTable({ query }: { query: string }) {
+  const customers: FormattedCustomersTable[] =
+    await fetchFilteredCustomers(query)
 
   return (
     <div className="w-full">
@@ -116,5 +116,5 @@ export default async function CustomersTable({query}:{query: string}) {
         </div>
       </div>
     </div>
-  );
+  )
 }

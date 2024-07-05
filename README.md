@@ -54,7 +54,7 @@ Followed by npm run dev to start the development server.
 npm run dev
 ```
 
-```npm run dev``` starts your Next.js development server on port 3000. Let's check to see if it's working. Open http://localhost:3000 on your browser.
+`npm run dev` starts your Next.js development server on port 3000. Let's check to see if it's working. Open http://localhost:3000 on your browser.
 
 ## CSS Styling
 
@@ -65,6 +65,7 @@ npm run dev
 You can import global.css in any component in your application, but it's usually good practice to add it to your top-level component. In Next.js, this is the root layout (more on this later).
 
 > **/app/layout.tsx**
+
 ```TypeScript
 import '@/app/ui/global.css';
 ```
@@ -86,7 +87,7 @@ When you use create-next-app to start a new project, Next.js will ask if you wan
 If you look at /app/page.tsx, you'll see that we're using Tailwind classes in the example.
 
 ```tsx
-<div className="h-0 w-0 border-b-[30px] border-l-[20px] border-r-[20px] border-b-black border-l-transparent border-r-transparent"/>
+<div className="h-0 w-0 border-b-[30px] border-l-[20px] border-r-[20px] border-b-black border-l-transparent border-r-transparent" />
 ```
 
 ### CSS Modules
@@ -98,6 +99,7 @@ CSS Modules allow you to scope CSS to a component by automatically creating uniq
 Here's how you could create the same shape from the quiz above using CSS modules.
 
 > **app/ui/home.module.css**
+
 ```css
 .shape {
   height: 0;
@@ -121,7 +123,7 @@ You can use clsx to conditionally apply the classes, like this:
 
 ```tsx
 import clsx from 'clsx';
- 
+
 export default function InvoiceStatus({ status }: { status: string }) {
   return (
     <span
@@ -151,7 +153,6 @@ Here are the topics we’ll cover
 
 - ✅ How fonts and images are optimized in Next.js.
 
-
 ### Why optimize fonts?
 
 Fonts play a significant role in the design of a website, but using custom fonts in your project can affect performance if the font files need to be fetched and loaded.
@@ -170,9 +171,9 @@ Import the Inter font from the next/font/google module - this will be your prima
 Then, specify what subset you'd like to load. In this case, 'latin':
 
 ```tsx
-import { Inter } from 'next/font/google';
+import { Inter } from 'next/font/google'
 
-export const inter = Inter({ subsets: ['latin'] });
+export const inter = Inter({ subsets: ['latin'] })
 ```
 
 Finally, add the font to the <body> element in /app/layout.tsx
@@ -181,8 +182,8 @@ By adding Inter to the <body> element, the font will be applied throughout your 
 
 ```css
 .antialiased {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 ```
 
@@ -203,7 +204,10 @@ If you look inside the folder, you'll see there's are two images: hero-desktop.p
 With regular HTML, you would add an image as follows:
 
 ```tsx
-    <img src="/hero.png" alt="Screenshots of the dashboard project showing desktop and mobile versions"/>
+<img
+  src="/hero.png"
+  alt="Screenshots of the dashboard project showing desktop and mobile versions"
+/>
 ```
 
 However, this means you have to manually:
@@ -213,7 +217,7 @@ However, this means you have to manually:
 - Prevent layout shift as the images load.
 - Lazy load images that are outside the user's viewport.
 
-Instead of manually handling these optimizations, you can use the ```next/image``` component to automatically optimize your images.
+Instead of manually handling these optimizations, you can use the `next/image` component to automatically optimize your images.
 
 ### The \<Image\> component
 
@@ -231,13 +235,13 @@ Let's swap the \<img\> tag for an \<Image\> component.
 In your /app/page.tsx file, import the component from next/image. Then, add the image under the comment:
 
 ```tsx
-    <Image
-        src="/hero-desktop.png"
-        width={1000}
-        height={760}
-        className="hidden md:block"
-        alt="Screenshots of the dashboard project showing desktop and mobile versions"
-    />
+<Image
+  src="/hero-desktop.png"
+  width={1000}
+  height={760}
+  className="hidden md:block"
+  alt="Screenshots of the dashboard project showing desktop and mobile versions"
+/>
 ```
 
 Here, you're setting the width to 1000 and height to 760 pixels. It's good practice to set the width and height of your images to avoid layout shift, these should be an aspect ratio identical to the source image.
@@ -251,13 +255,13 @@ Now it's your turn again! Under the image you've just added, add another <Image>
 - You can use Dev Tools to check if the desktop and mobile images are swapped correctly.
 
 ```tsx
-    <Image
-        src="/hero-mobile.png"
-        width={560}
-        height={620}
-        className="block md:hidden"
-        alt="Screenshot of the dashboard project showing mobile version"
-    />
+<Image
+  src="/hero-mobile.png"
+  width={560}
+  height={620}
+  className="block md:hidden"
+  alt="Screenshot of the dashboard project showing mobile version"
+/>
 ```
 
 ### Recommended reading
@@ -268,7 +272,6 @@ There's a lot more to learn about these topics, including optimizing remote imag
 - [Font Optimization Docs](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
 - [Improving Web Performance with Images (MDN)](https://developer.mozilla.org/en-US/docs/Learn/Performance/Multimedia)
 - [Web Fonts (MDN)](https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts)
-
 
 **Demo access**
 
